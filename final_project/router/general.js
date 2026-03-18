@@ -1,9 +1,52 @@
+const axios = require('axios');
 const express = require('express');
 let books = require("./booksdb.js");
 let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
 
+// Task 10 - Get all books using async-await with Axios
+public_users.get('/async/books', async (req, res) => {
+    try {
+      const response = await axios.get('http://localhost:5000/');
+      res.send(JSON.stringify(response.data, null, 4));
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching books", error: error.message });
+    }
+  });
+
+  // Task 11 - Get book by ISBN using async-await with Axios
+public_users.get('/async/isbn/:isbn', async (req, res) => {
+    const isbn = req.params.isbn;
+    try {
+      const response = await axios.get(`http://localhost:5000/isbn/${isbn}`);
+      res.send(JSON.stringify(response.data, null, 4));
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching book", error: error.message });
+    }
+  });
+
+  // Task 12 - Get book by author using async-await with Axios
+public_users.get('/async/author/:author', async (req, res) => {
+    const author = req.params.author;
+    try {
+      const response = await axios.get(`http://localhost:5000/author/${author}`);
+      res.send(JSON.stringify(response.data, null, 4));
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching books", error: error.message });
+    }
+  });
+
+  // Task 13 - Get book by title using async-await with Axios
+public_users.get('/async/title/:title', async (req, res) => {
+    const title = req.params.title;
+    try {
+      const response = await axios.get(`http://localhost:5000/title/${title}`);
+      res.send(JSON.stringify(response.data, null, 4));
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching books", error: error.message });
+    }
+  });
 
 public_users.post("/register", (req, res) => {
   const username = req.body.username;
